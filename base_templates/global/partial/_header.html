@@ -1,0 +1,35 @@
+    <header class="header">
+        <h1 class="header-heading">
+            <a href="{% url 'books:index' %}" class="header-link">Biblioteca</a>
+        </h1>
+        <nav class="menu">
+            <ul class="menu-list">
+            {% if user.is_authenticated %}
+                <li class="menu-item">
+                    <a href="{% url 'books:create' %}" class="menu-link">Cadastrar livro</a>
+                </li>
+
+                <li class="menu-item">
+                    <a href="{% url 'books:user_update' %}" class="menu-link">Meu perfil</a>
+                </li>
+
+                <li class="menu-item">
+                    <a href="{% url 'books:logout' %}" class="menu-link">Sair</a>
+                </li>
+            {% else %}
+                <li class="menu-item">
+                    <a href="{% url 'books:login' %}" class="menu-link">Login</a>
+                </li>
+                <li class="menu-item">
+                    <a href="{% url 'books:register' %}" class="menu-link">Registrar</a>
+                </li>
+            {% endif %}
+
+            </ul>
+        </nav> 
+        <div class="search">
+            <form action="{% url 'books:search' %}" method="GET">
+                <input id="search" name="q" type="text" class="search-input" value="{{ request.GET.q.strip }}" placeholder="Pesquisar...">
+            </form>
+        </div> 
+    </header>

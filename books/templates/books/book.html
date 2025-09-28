@@ -1,0 +1,84 @@
+{% extends "global/base.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="single-book">
+    <div class="book-container">
+      <div class="book-info">
+        <h1 class="single-book-name">
+            {{ book.title }} 
+        </h1>
+        <p><b>ID:</b> {{ book.id }}</p>
+        <p><b>Título:</b> {{ book.author }}</p>
+        <p><b>Editora:</b> {{ book.publisher }}</p>
+        <p><b>Ano de Publicação:</b> {{ book.publication_year }}</p>
+        <p><b>Edição:</b> {{ book.edition }}</p>
+        <p><b>Categoria:</b> {{ book.category }}</p>
+        <p><b>Data de Criação:</b> {{ book.create_date }}</p>    
+        
+        <div class="book-links">
+          {% if user == book.owner %}
+          <a class="btn btn-link" href="{% url 'books:update' book.id %}">Update</a>
+
+          <form action="{% url 'books:delete' book.id %}" method="POST">
+            {% csrf_token %}
+            {% if confirmation == 'no' %}
+            <input type="hidden" name="confirmation" value="yes">
+            <button class="btn btn-link btn-success" type="submit">Confirma?</button>
+            {% else %}
+            <button class="btn btn-link btn-delete" type="submit">Delete</button>
+            {% endif %}
+          </form>
+          {% endif %}
+        </div>
+        
+      </div>
+      
+      
+      <div class="book-image">
+        {% if book.picture %} 
+        <img src="{{ book.picture.url }}" alt="{{ book.title }} - {{ book.author }}">
+        {% else %}
+        <img src="{% static 'global/img/imagem_nao_encontrada.png' %}" alt="Imagem não localizada">
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+
+{% comment %}
+{% extends "global/base.html" %}
+
+{% block content %}
+  <div class="single-book">
+    <h1 class="single-book-name">
+        {{ book.title }} 
+    </h1>
+    <p><b>ID:</b> {{ book.id }}</p>
+    <p><b>Título:</b> {{ book.author }}</p>
+    <p><b>Editora:</b> {{ book.publisher }}</p>
+    <p><b>Ano de Publicação:</b> {{ book.publication_year }}</p>
+    <p><b>Edição:</b> {{ book.edition }}</p>
+    <p><b>Categoria:</b> {{ book.category }}</p>
+    <p><b>Data de Criação:</b> {{ book.create_date }}</p>    
+    <p>
+      <img src="{{ book.picture.url }}" alt="{{ book.title }} - {{ book.author }}">
+    </p>
+    <div class="book-links">
+      <a class="btn btn-link" href="{% url 'books:update' book.id %}">Update</a>
+
+      <form action="{% url 'books:delete' book.id %}" method="POST">
+        {% csrf_token %}
+        {% if confirmation == 'no' %}
+        <input type="hidden" name="confirmation" value="yes">
+        <button class="btn btn-link btn-success" type="submit">Confirma?</button>
+        {% else %}
+        <button class="btn btn-link btn-delete" type="submit">Delete</button>
+        {% endif %}
+      </form>
+    </div>
+</div>
+{% endblock content %} {% endcomment %}
+
+

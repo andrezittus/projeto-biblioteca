@@ -1,0 +1,40 @@
+{% extends "global/base.html" %}
+
+{% block content %}
+{% if page_obj %}
+  <div class="responsive-table">
+    <table class="books-table">
+        <caption class="table-caption">Minha Biblioteca</caption>
+        <thead>
+            <tr class="table-row table-row-header">
+                <th class="table-header">ID</th>
+                <th class="table-header">Título</th>
+                <th class="table-header">Autor</th>
+                <th class="table-header">Ano Publicação</th>
+                <th class="table-header">Editora</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in page_obj %}
+            <tr class="table-row">
+                <td class="table-cell"><a class="table-link" href="{% url 'books:book' book.id %}">{{ book.id }}</a></td>
+                <td class="table-cell">{{ book.title }}</td>
+                <td class="table-cell">{{ book.author }}</td>
+                <td class="table-cell">{{ book.publication_year }}</td>
+                <td class="table-cell">{{ book.publisher }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No books available.</td>
+            </tr>
+            {% endfor %}
+    </table>
+</div>
+{% else %}
+  <div class="single-book">
+    <h1 class="single-book-name">
+        Nenhum livro encontrado.
+    </h1>  
+</div>
+{% endif %}
+{% endblock content %}
