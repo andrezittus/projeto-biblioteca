@@ -1,7 +1,7 @@
 from django.contrib import admin
 from books import models
 
-
+#TESTE
 @admin.register(models.Book)
 class BookAdmin(admin.ModelAdmin):
     list_display = ('id','title', 'author', 'publisher', 'publication_year', 'edition', 'create_date', 'show')
